@@ -77,21 +77,21 @@ const Dashboard = () => {
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-200/50 dark:border-gray-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* 로고 및 제목 섹션 */}
+            {/* 로고 및 제목 섹션 - 개선된 가독성 */}
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-xl blur-lg opacity-30 animate-pulse"></div>
-                <div className="relative bg-gradient-to-r from-primary to-secondary p-3 rounded-xl shadow-lg">
-                  <Shield className="w-8 h-8 text-white" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur-lg opacity-40 animate-pulse"></div>
+                <div className="relative bg-gradient-to-r from-blue-600 to-purple-700 p-4 rounded-xl shadow-2xl border border-white/20">
+                  <Shield className="w-10 h-10 text-white drop-shadow-lg" />
                 </div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-3xl font-black text-gray-800 dark:text-white drop-shadow-sm">
                   공주시 청렴지수 대시보드
                 </h1>
-                <div className="flex items-center space-x-2 mt-1">
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">청렴 공주 온도계</p>
-                  <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-700">
+                <div className="flex items-center space-x-3 mt-2">
+                  <p className="text-base font-bold text-gray-700 dark:text-gray-200 bg-yellow-100 dark:bg-yellow-900/50 px-3 py-1 rounded-full">청렴 공주 온도계</p>
+                  <span className="inline-flex items-center px-3 py-1.5 text-sm font-bold bg-blue-600 text-white rounded-full shadow-lg border-2 border-blue-400">
                     2025 공주시 공모전
                   </span>
                 </div>
@@ -124,7 +124,7 @@ const Dashboard = () => {
       <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" role="main">
         {/* 개선된 네비게이션 탭 */}
         <nav aria-label="대시보드 네비게이션" className="mb-8">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-2">
+          <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg rounded-2xl shadow-2xl border-2 border-gray-300/60 dark:border-gray-600/60 p-3">
             <div className="flex flex-wrap gap-2" role="tablist">
               {[
                 { id: 'overview', label: '전체 현황', icon: Shield, color: 'blue' },
@@ -143,26 +143,26 @@ const Dashboard = () => {
                     role="tab"
                     aria-selected={isActive}
                     aria-controls={`${tab.id}-panel`}
-                    className={`group relative flex items-center space-x-3 px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
+                    className={`group relative flex items-center space-x-3 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 border-2 ${
                       isActive 
                         ? (() => {
                             switch(tab.color) {
-                              case 'blue': return 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25';
-                              case 'green': return 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg shadow-green-500/25';
-                              case 'purple': return 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/25';
-                              case 'orange': return 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25';
-                              case 'indigo': return 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/25';
-                              default: return 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25';
+                              case 'blue': return 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-2xl shadow-blue-500/40 border-blue-300';
+                              case 'green': return 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-2xl shadow-green-500/40 border-green-300';
+                              case 'purple': return 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-2xl shadow-purple-500/40 border-purple-300';
+                              case 'orange': return 'bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-2xl shadow-orange-500/40 border-orange-300';
+                              case 'indigo': return 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-2xl shadow-indigo-500/40 border-indigo-300';
+                              default: return 'bg-gradient-to-r from-primary to-secondary text-white shadow-2xl shadow-primary/40 border-primary/30';
                             }
                           })()
-                        : 'bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-800 dark:hover:text-gray-100'
+                        : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-500 hover:text-gray-900 dark:hover:text-white border-gray-300 dark:border-gray-500 shadow-lg hover:shadow-xl'
                     }`}
                   >
                     {isActive && (
                       <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl"></div>
                     )}
-                    <Icon className={`w-5 h-5 relative z-10 transition-transform duration-300 ${isActive ? 'rotate-12' : 'group-hover:rotate-6'}`} />
-                    <span className="hidden sm:inline relative z-10 font-semibold">{tab.label}</span>
+                    <Icon className={`w-6 h-6 relative z-10 transition-transform duration-300 ${isActive ? 'rotate-12' : 'group-hover:rotate-6'}`} />
+                    <span className="hidden sm:inline relative z-10 font-black text-lg drop-shadow-sm">{tab.label}</span>
                     {isActive && (
                       <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg animate-bounce"></div>
                     )}

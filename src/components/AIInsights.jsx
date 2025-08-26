@@ -303,10 +303,10 @@ const AIInsights = ({ data }) => {
             <button
               onClick={generateInsights}
               disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
+              className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white rounded-2xl hover:from-blue-700 hover:to-purple-800 disabled:opacity-50 shadow-2xl border-2 border-blue-400 font-bold text-lg transition-all duration-300 transform hover:scale-105"
             >
-              {loading ? <Loader className="w-4 h-4 animate-spin" /> : <TrendingUp className="w-4 h-4" />}
-              <span>{loading ? '분석 중...' : '인사이트 생성'}</span>
+              {loading ? <Loader className="w-6 h-6 animate-spin" /> : <TrendingUp className="w-6 h-6" />}
+              <span className="drop-shadow-sm">{loading ? '분석 중...' : '🤖 인사이트 생성'}</span>
             </button>
           </div>
           
@@ -332,10 +332,10 @@ const AIInsights = ({ data }) => {
             <button
               onClick={generatePredictions}
               disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
+              className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-2xl hover:from-green-700 hover:to-emerald-800 disabled:opacity-50 shadow-2xl border-2 border-green-400 font-bold text-lg transition-all duration-300 transform hover:scale-105"
             >
-              {loading ? <Loader className="w-4 h-4 animate-spin" /> : <TrendingUp className="w-4 h-4" />}
-              <span>{loading ? '예측 중...' : '예측 생성'}</span>
+              {loading ? <Loader className="w-6 h-6 animate-spin" /> : <TrendingUp className="w-6 h-6" />}
+              <span className="drop-shadow-sm">{loading ? '예측 중...' : '📈 예측 생성'}</span>
             </button>
           </div>
           
@@ -357,10 +357,10 @@ const AIInsights = ({ data }) => {
             <button
               onClick={generateReport}
               disabled={loading}
-              className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
+              className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-orange-600 to-red-700 text-white rounded-2xl hover:from-orange-700 hover:to-red-800 disabled:opacity-50 shadow-2xl border-2 border-orange-400 font-bold text-lg transition-all duration-300 transform hover:scale-105"
             >
-              {loading ? <Loader className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
-              <span>{loading ? '생성 중...' : '보고서 생성'}</span>
+              {loading ? <Loader className="w-6 h-6 animate-spin" /> : <FileText className="w-6 h-6" />}
+              <span className="drop-shadow-sm">{loading ? '생성 중...' : '📄 보고서 생성'}</span>
             </button>
           </div>
           
@@ -396,10 +396,10 @@ const AIInsights = ({ data }) => {
               <button
                 onClick={handleQuestion}
                 disabled={questionLoading || !question.trim()}
-                className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
+                className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-2xl hover:from-purple-700 hover:to-indigo-800 disabled:opacity-50 shadow-2xl border-2 border-purple-400 font-bold text-lg transition-all duration-300 transform hover:scale-105"
               >
-                {questionLoading ? <Loader className="w-4 h-4 animate-spin" /> : <MessageSquare className="w-4 h-4" />}
-                <span>{questionLoading ? '답변 중...' : '질문하기'}</span>
+                {questionLoading ? <Loader className="w-6 h-6 animate-spin" /> : <MessageSquare className="w-6 h-6" />}
+                <span className="drop-shadow-sm">{questionLoading ? '답변 중...' : '💬 질문하기'}</span>
               </button>
             </div>
 
