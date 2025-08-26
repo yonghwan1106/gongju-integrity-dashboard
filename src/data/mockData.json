@@ -1,0 +1,220 @@
+{
+  "integrationIndex": {
+    "totalScore": 78.5,
+    "grade": "B+",
+    "rank": 3,
+    "lastUpdated": "2025-08-26T10:30:00Z",
+    "categories": {
+      "contract": {
+        "score": 82.1,
+        "weight": 0.4,
+        "indicators": {
+          "repostingRate": 8.2,
+          "avgProcessingDays": 12.5,
+          "vendorParticipationRate": 85.3,
+          "contractChangeRate": 5.1
+        }
+      },
+      "personnel": {
+        "score": 75.8,
+        "weight": 0.3,
+        "indicators": {
+          "promotionTransparency": 78.2,
+          "committeeFrequency": 24,
+          "appealCount": 2
+        }
+      },
+      "budget": {
+        "score": 77.9,
+        "weight": 0.3,
+        "indicators": {
+          "expenseAppropiateness": 82.1,
+          "budgetChangeDisclosure": 73.7
+        }
+      }
+    },
+    "citizenSatisfaction": 76.3
+  },
+  "departments": [
+    {
+      "id": "D001",
+      "name": "기획예산과",
+      "score": 85.2,
+      "rank": 1,
+      "trend": "+2.3",
+      "employees": 45,
+      "categories": {
+        "contract": 87.5,
+        "personnel": 83.2,
+        "budget": 84.8
+      }
+    },
+    {
+      "id": "D002", 
+      "name": "민원봉사과",
+      "score": 82.7,
+      "rank": 2,
+      "trend": "+1.8",
+      "employees": 38,
+      "categories": {
+        "contract": 84.1,
+        "personnel": 81.5,
+        "budget": 82.4
+      }
+    },
+    {
+      "id": "D003",
+      "name": "문화관광과",
+      "score": 79.4,
+      "rank": 3,
+      "trend": "-0.5",
+      "employees": 32,
+      "categories": {
+        "contract": 78.8,
+        "personnel": 79.2,
+        "budget": 80.1
+      }
+    },
+    {
+      "id": "D004",
+      "name": "환경위생과",
+      "score": 77.8,
+      "rank": 4,
+      "trend": "+1.2",
+      "employees": 41,
+      "categories": {
+        "contract": 76.5,
+        "personnel": 78.9,
+        "budget": 78.1
+      }
+    },
+    {
+      "id": "D005",
+      "name": "도시건설과",
+      "score": 76.2,
+      "rank": 5,
+      "trend": "+0.8",
+      "employees": 55,
+      "categories": {
+        "contract": 74.8,
+        "personnel": 77.1,
+        "budget": 76.7
+      }
+    },
+    {
+      "id": "D006",
+      "name": "농업기술센터",
+      "score": 74.9,
+      "rank": 6,
+      "trend": "-1.1",
+      "employees": 28,
+      "categories": {
+        "contract": 73.2,
+        "personnel": 75.8,
+        "budget": 75.7
+      }
+    },
+    {
+      "id": "D007",
+      "name": "사회복지과",
+      "score": 73.1,
+      "rank": 7,
+      "trend": "+2.1",
+      "employees": 47,
+      "categories": {
+        "contract": 71.5,
+        "personnel": 74.2,
+        "budget": 73.6
+      }
+    },
+    {
+      "id": "D008",
+      "name": "교육체육과",
+      "score": 71.8,
+      "rank": 8,
+      "trend": "+0.3",
+      "employees": 26,
+      "categories": {
+        "contract": 70.1,
+        "personnel": 72.9,
+        "budget": 72.4
+      }
+    },
+    {
+      "id": "D009",
+      "name": "산업경제과",
+      "score": 70.5,
+      "rank": 9,
+      "trend": "-0.9",
+      "employees": 35,
+      "categories": {
+        "contract": 68.8,
+        "personnel": 71.2,
+        "budget": 71.5
+      }
+    },
+    {
+      "id": "D010",
+      "name": "총무과",
+      "score": 69.2,
+      "rank": 10,
+      "trend": "+1.5",
+      "employees": 29,
+      "categories": {
+        "contract": 67.3,
+        "personnel": 70.1,
+        "budget": 70.2
+      }
+    }
+  ],
+  "monthlyTrends": [
+    {
+      "month": "2025-02",
+      "totalScore": 74.8,
+      "contractScore": 76.2,
+      "personnelScore": 72.1,
+      "budgetScore": 76.0
+    },
+    {
+      "month": "2025-03",
+      "totalScore": 76.2,
+      "contractScore": 78.5,
+      "personnelScore": 72.9,
+      "budgetScore": 77.2
+    },
+    {
+      "month": "2025-04",
+      "totalScore": 75.9,
+      "contractScore": 79.1,
+      "personnelScore": 71.8,
+      "budgetScore": 76.8
+    },
+    {
+      "month": "2025-05",
+      "totalScore": 77.1,
+      "contractScore": 80.2,
+      "personnelScore": 73.5,
+      "budgetScore": 77.6
+    },
+    {
+      "month": "2025-06",
+      "totalScore": 76.8,
+      "contractScore": 81.1,
+      "personnelScore": 74.2,
+      "budgetScore": 75.1
+    },
+    {
+      "month": "2025-07",
+      "totalScore": 78.5,
+      "contractScore": 82.1,
+      "personnelScore": 75.8,
+      "budgetScore": 77.9
+    }
+  ],
+  "statistics": {
+    "totalDepartments": 10,
+    "averageScore": 75.16,
+    "improvementRate": "+2.1%",
+    "citizenParticipation": 1247
+  }
+}
