@@ -100,18 +100,6 @@ const Dashboard = () => {
             
             {/* 메트릭 및 컨트롤 섹션 */}
             <div className="flex items-center space-x-6">
-              {/* 현재 점수 카드 */}
-              <div className="hidden sm:block bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-600">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-1">
-                    {formatScore(integrationIndex.totalScore)}
-                  </div>
-                  <div className={`grade-display ${getGradeColor(integrationIndex.grade)} mb-2`}>
-                    {integrationIndex.grade}
-                  </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">종합 청렴도</div>
-                </div>
-              </div>
               
               {/* 업데이트 정보 */}
               <div className="hidden md:block text-right">
@@ -234,7 +222,7 @@ const Dashboard = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                         부서별 청렴지수 순위
                       </h3>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -338,7 +326,7 @@ const Dashboard = () => {
             <div className="animate-fade-in">
               <div className="card">
                 <div className="card-header">
-                  <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                     월별 청렴지수 추이
                   </h3>
                 </div>
