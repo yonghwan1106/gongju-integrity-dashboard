@@ -121,11 +121,11 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" role="main">
         {/* 개선된 네비게이션 탭 */}
-        <div className="mb-8">
+        <nav aria-label="대시보드 네비게이션" className="mb-8">
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50 p-2">
-            <nav className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" role="tablist">
               {[
                 { id: 'overview', label: '전체 현황', icon: Shield, color: 'blue' },
                 { id: 'live', label: '실시간 시뮬레이션', icon: Activity, color: 'green' },
@@ -140,6 +140,9 @@ const Dashboard = () => {
                   <button
                     key={tab.id}
                     onClick={() => setCurrentView(tab.id)}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`${tab.id}-panel`}
                     className={`group relative flex items-center space-x-3 px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
                       isActive 
                         ? (() => {
@@ -166,21 +169,22 @@ const Dashboard = () => {
                   </button>
                 );
               })}
-            </nav>
+            </div>
           </div>
           
           {/* 탭 설명 */}
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {currentView === 'overview' && '📊 공주시 전 부서의 청렴지수 현황과 통계를 한눈에 확인하세요'}
-              {currentView === 'live' && '⚡ 실시간으로 변화하는 청렴지수 데이터를 시뮬레이션합니다'}
-              {currentView === 'ai' && '🤖 Claude AI가 제공하는 청렴지수 분석과 예측 정보를 확인하세요'}
-              {currentView === 'filters' && '🔍 원하는 조건에 따라 데이터를 필터링하고 분석하세요'}
-              {currentView === 'export' && '📤 분석 결과를 다양한 형식으로 내보내고 공유하세요'}
+            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-4xl mx-auto">
+              {currentView === 'overview' && '📊 공주시 전 부서의 청렴지수 현황과 통계를 한눈에 확인하세요. 각 부서별 점수, 월별 추이, AI 분석을 통한 종합적인 청렴도 평가를 제공합니다. 시민 참여도와 만족도 지표로 투명한 행정을 실현합니다.'}
+              {currentView === 'live' && '⚡ 실시간으로 변화하는 청렴지수 데이터를 시뮬레이션합니다. 동적 차트와 알림 시스템으로 즉각적인 변화를 감지하고, 실제 운영 환경에서의 데이터 흐름을 체험할 수 있습니다.'}
+              {currentView === 'ai' && '🤖 Claude AI가 제공하는 청렴지수 분석과 예측 정보를 확인하세요. 머신러닝 기반의 패턴 분석으로 미래 청렴도 변화를 예측하고, 개선 방안을 제시합니다.'}
+              {currentView === 'filters' && '🔍 원하는 조건에 따라 데이터를 필터링하고 분석하세요. 부서별, 점수 범위별, 기간별 세부 분석이 가능하며, 맞춤형 리포트를 생성할 수 있습니다.'}
+              {currentView === 'export' && '📤 분석 결과를 다양한 형식으로 내보내고 공유하세요. PDF, Excel, JSON 형식 지원으로 보고서 작성과 데이터 활용이 용이합니다.'}
             </p>
           </div>
-        </div>
+        </nav>
         {/* 조건부 렌더링 */}
+        <div id="overview-panel" role="tabpanel" aria-labelledby="overview" hidden={currentView !== 'overview'}>
         {currentView === 'overview' && (
           <div className="space-y-8">
             {/* 메트릭 카드들 */}
@@ -335,18 +339,24 @@ const Dashboard = () => {
             </div>
           </div>
         )}
+        </div>
 
+        <div id="live-panel" role="tabpanel" aria-labelledby="live" hidden={currentView !== 'live'}>
         {currentView === 'live' && (
           <LiveDataSimulator 
             onDataUpdate={handleLiveDataUpdate}
             initialData={mockData}
           />
         )}
+        </div>
 
+        <div id="ai-panel" role="tabpanel" aria-labelledby="ai" hidden={currentView !== 'ai'}>
         {currentView === 'ai' && (
           <AIInsights data={data} />
         )}
+        </div>
 
+        <div id="filters-panel" role="tabpanel" aria-labelledby="filters" hidden={currentView !== 'filters'}>
         {currentView === 'filters' && (
           <DataFilters 
             data={data} 
@@ -354,10 +364,13 @@ const Dashboard = () => {
             activeFilters={activeFilters}
           />
         )}
+        </div>
 
+        <div id="export-panel" role="tabpanel" aria-labelledby="export" hidden={currentView !== 'export'}>
         {currentView === 'export' && (
           <ExportTools data={displayData} />
         )}
+        </div>
       </main>
 
       {/* 개선된 푸터 */}
@@ -381,6 +394,9 @@ const Dashboard = () => {
               <p className="text-gray-300 text-sm leading-relaxed">
                 투명하고 깨끗한 공주시를 위한 청렴도 모니터링 시스템입니다. 
                 실시간 데이터와 AI 분석을 통해 더 나은 행정 서비스를 제공합니다.
+                각 부서별 청렴지수 현황을 실시간으로 확인하고, 시민 만족도를 높이기 위한 
+                투명한 행정을 실현합니다. Claude AI의 예측 분석으로 청렴도 개선 방향을 
+                제시하며, 데이터 기반의 정책 수립을 지원합니다.
               </p>
               <div className="flex items-center space-x-2">
                 <span className="px-3 py-1 bg-blue-600 text-blue-100 text-xs rounded-full font-medium">
