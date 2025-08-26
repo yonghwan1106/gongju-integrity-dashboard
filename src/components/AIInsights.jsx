@@ -1,7 +1,179 @@
 import React, { useState, useEffect } from 'react';
-import { Bot, TrendingUp, AlertTriangle, FileText, MessageSquare, Loader } from 'lucide-react';
+import { Bot, TrendingUp, AlertTriangle, FileText, MessageSquare, Loader, Calendar, Target, CheckCircle, XCircle, AlertCircle, BarChart3 } from 'lucide-react';
 // import claudeApi from '../services/claudeApi'; // CORS 이슈로 임시 비활성화
 import claudeApi from '../services/mockClaudeApi'; // 시연용 Mock API
+import { formatScore } from '../utils/formatters';
+import { calculateGrade, getGradeColor } from '../utils/calculations';
+
+const PredictionDisplay = ({ predictions }) => {
+  let parsedData;
+  
+  try {
+    parsedData = typeof predictions === 'string' ? JSON.parse(predictions) : predictions;
+  } catch (error) {
+    return (
+      <div className="bg-red-50 border border-red-200 p-4 rounded-lg">
+        <div className="flex items-center space-x-2">
+          <XCircle className="w-5 h-5 text-red-500" />
+          <span className="text-red-700">예측 데이터 파싱 중 오류가 발생했습니다.</span>
+        </div>
+      </div>
+    );
+  }
+
+  const { nextThreeMonths, keyFactors, riskFactors, recommendations } = parsedData.predictions;
+
+  return (
+    <div className="space-y-6">
+      {/* 3개월 예측 차트 */}
+      <div className="bg-white border rounded-lg p-6">
+        <div className="flex items-center space-x-2 mb-4">
+          <BarChart3 className="w-5 h-5 text-primary" />
+          <h5 className="text-lg font-semibold">3개월 예측 점수</h5>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {nextThreeMonths.map((monthData, index) => {
+            const grade = calculateGrade(monthData.totalScore);
+            const gradeColor = getGradeColor(grade);
+            
+            return (
+              <div key={monthData.month} className="bg-gray-50 p-4 rounded-lg">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4 text-gray-600" />
+                    <span className="font-medium text-gray-800">
+                      {new Date(monthData.month).toLocaleDateString('ko-KR', { 
+                        year: 'numeric', 
+                        month: 'long' 
+                      })}
+                    </span>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium grade-display ${gradeColor}`}>
+                    {grade}
+                  </span>
+                </div>
+                
+                <div className="text-2xl font-bold text-primary mb-2">
+                  {formatScore(monthData.totalScore)}점
+                </div>
+                
+                <div className="space-y-1 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">계약:</span>
+                    <span className="font-medium">{formatScore(monthData.contractScore)}점</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">인사:</span>
+                    <span className="font-medium">{formatScore(monthData.personnelScore)}점</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">예산:</span>
+                    <span className="font-medium">{formatScore(monthData.budgetScore)}점</span>
+                  </div>
+                </div>
+                
+                <div className="mt-2 pt-2 border-t border-gray-200">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-500">신뢰도:</span>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-16 bg-gray-200 rounded-full h-1.5">
+                        <div 
+                          className={`h-1.5 rounded-full ${
+                            monthData.confidence >= 80 ? 'bg-green-500' : 
+                            monthData.confidence >= 70 ? 'bg-yellow-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${monthData.confidence}%` }}
+                        ></div>
+                      </div>
+                      <span className="font-medium">{monthData.confidence}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 예측 추세 시각화 */}
+        <div className="bg-gradient-to-r from-primary/5 to-secondary/5 p-4 rounded-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              <span className="font-medium">예상 추세</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              {nextThreeMonths.map((month, index) => (
+                <div key={index} className="flex items-center space-x-1">
+                  <div className={`w-3 h-3 rounded-full ${
+                    index === 0 ? 'bg-primary' : 
+                    index === 1 ? 'bg-secondary' : 'bg-accent'
+                  }`}></div>
+                  <span className="text-sm font-medium">
+                    {formatScore(month.totalScore)}점
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 핵심 요인 분석 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white border rounded-lg p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <CheckCircle className="w-5 h-5 text-green-600" />
+            <h5 className="text-lg font-semibold">긍정적 요인</h5>
+          </div>
+          <ul className="space-y-2">
+            {keyFactors.map((factor, index) => (
+              <li key={index} className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm text-gray-700">{factor}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="bg-white border rounded-lg p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <AlertCircle className="w-5 h-5 text-orange-600" />
+            <h5 className="text-lg font-semibold">위험 요인</h5>
+          </div>
+          <ul className="space-y-2">
+            {riskFactors.map((factor, index) => (
+              <li key={index} className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm text-gray-700">{factor}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* 권장 조치사항 */}
+      <div className="bg-white border rounded-lg p-6">
+        <div className="flex items-center space-x-2 mb-4">
+          <Target className="w-5 h-5 text-blue-600" />
+          <h5 className="text-lg font-semibold">권장 조치사항</h5>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {recommendations.map((recommendation, index) => (
+            <div key={index} className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+              <div className="flex items-start space-x-2">
+                <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                  {index + 1}
+                </div>
+                <span className="text-sm text-blue-800">{recommendation}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const AIInsights = ({ data }) => {
   const [insights, setInsights] = useState(null);
@@ -168,11 +340,7 @@ const AIInsights = ({ data }) => {
           </div>
           
           {predictions ? (
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans">
-                {predictions}
-              </pre>
-            </div>
+            <PredictionDisplay predictions={predictions} />
           ) : (
             <div className="text-center py-8 text-gray-500">
               <TrendingUp className="w-12 h-12 mx-auto mb-2 opacity-50" />
