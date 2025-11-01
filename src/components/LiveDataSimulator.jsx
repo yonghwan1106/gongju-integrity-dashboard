@@ -1,15 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Activity, Pause, Play, RotateCcw } from 'lucide-react';
 
 const LiveDataSimulator = ({ onDataUpdate, initialData }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
   const [lastUpdate, setLastUpdate] = useState(null);
+  const [currentData, setCurrentData] = useState(initialData);
+
+  // initialData가 변경되면 currentData 업데이트
+  useEffect(() => {
+    if (initialData) {
+      setCurrentData(initialData);
+    }
+  }, [initialData]);
+
+  const simulateDataUpdate = useCallback(() => {
+    if (!onDataUpdate || !currentData || !currentData.departments) return;
+
+    // 랜덤한 부서 선택
+    const randomDeptIndex = Math.floor(Math.random() * currentData.departments.length);
+    const randomChange = (Math.random() - 0.5) * 2; // -1 to +1 점 변화
+
+    // 새로운 데이터 생성
+    const updatedData = {
+      ...currentData,
+      departments: currentData.departments.map((dept, index) => {
+        if (index === randomDeptIndex) {
+          const newScore = Math.max(60, Math.min(95, dept.score + randomChange));
+          return {
+            ...dept,
+            score: parseFloat(newScore.toFixed(1)),
+            trend: randomChange > 0 ? `+${randomChange.toFixed(1)}` : randomChange.toFixed(1)
+          };
+        }
+        return dept;
+      }),
+      integrationIndex: {
+        ...currentData.integrationIndex,
+        lastUpdated: new Date().toISOString()
+      }
+    };
+
+    // 전체 평균 재계산
+    const avgScore = updatedData.departments.reduce((sum, dept) => sum + dept.score, 0) / updatedData.departments.length;
+    updatedData.statistics = {
+      ...(currentData.statistics || {}),
+      averageScore: parseFloat(avgScore.toFixed(1))
+    };
+
+    setCurrentData(updatedData);
+    onDataUpdate(updatedData);
+  }, [onDataUpdate, currentData]);
 
   useEffect(() => {
     let interval;
-    
-    if (isRunning) {
+
+    if (isRunning && currentData) {
       interval = setInterval(() => {
         simulateDataUpdate();
         setUpdateCount(prev => prev + 1);
@@ -22,44 +68,7 @@ const LiveDataSimulator = ({ onDataUpdate, initialData }) => {
         clearInterval(interval);
       }
     };
-  }, [isRunning]);
-
-  const simulateDataUpdate = () => {
-    if (!onDataUpdate) return;
-
-    // 랜덤한 부서 선택
-    const randomDeptIndex = Math.floor(Math.random() * initialData.departments.length);
-    const randomChange = (Math.random() - 0.5) * 2; // -1 to +1 점 변화
-
-    // 새로운 데이터 생성
-    const updatedData = {
-      ...initialData,
-      departments: initialData.departments.map((dept, index) => {
-        if (index === randomDeptIndex) {
-          const newScore = Math.max(60, Math.min(95, dept.score + randomChange));
-          return {
-            ...dept,
-            score: parseFloat(newScore.toFixed(1)),
-            trend: randomChange > 0 ? `+${randomChange.toFixed(1)}` : randomChange.toFixed(1)
-          };
-        }
-        return dept;
-      }),
-      integrationIndex: {
-        ...initialData.integrationIndex,
-        lastUpdated: new Date().toISOString()
-      }
-    };
-
-    // 전체 평균 재계산
-    const avgScore = updatedData.departments.reduce((sum, dept) => sum + dept.score, 0) / updatedData.departments.length;
-    updatedData.statistics = {
-      ...initialData.statistics,
-      averageScore: parseFloat(avgScore.toFixed(1))
-    };
-
-    onDataUpdate(updatedData);
-  };
+  }, [isRunning, currentData, simulateDataUpdate]);
 
   const handleToggle = () => {
     setIsRunning(!isRunning);
@@ -69,7 +78,8 @@ const LiveDataSimulator = ({ onDataUpdate, initialData }) => {
     setIsRunning(false);
     setUpdateCount(0);
     setLastUpdate(null);
-    if (onDataUpdate) {
+    if (onDataUpdate && initialData) {
+      setCurrentData(initialData);
       onDataUpdate(initialData);
     }
   };
