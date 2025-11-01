@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Activity, Pause, Play, RotateCcw } from 'lucide-react';
 
 const LiveDataSimulator = ({ onDataUpdate, initialData }) => {
@@ -179,6 +180,16 @@ const LiveDataSimulator = ({ onDataUpdate, initialData }) => {
       </div>
     </div>
   );
+};
+
+LiveDataSimulator.propTypes = {
+  onDataUpdate: PropTypes.func.isRequired,
+  initialData: PropTypes.shape({
+    integrationIndex: PropTypes.object,
+    departments: PropTypes.array,
+    monthlyTrends: PropTypes.array,
+    statistics: PropTypes.object
+  }).isRequired
 };
 
 export default LiveDataSimulator;

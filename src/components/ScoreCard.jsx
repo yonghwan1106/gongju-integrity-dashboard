@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TrendingUp, TrendingDown, Minus, Sparkles } from 'lucide-react';
 import { getTrendColor, formatTrend } from '../utils/calculations';
 import { formatScore } from '../utils/formatters';
@@ -94,4 +95,17 @@ const ScoreCard = ({ title, score, trend, description, color = "primary" }) => {
   );
 };
 
-export default ScoreCard;
+ScoreCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  trend: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  description: PropTypes.string,
+  color: PropTypes.oneOf(['primary', 'secondary', 'success', 'warning', 'info'])
+};
+
+ScoreCard.defaultProps = {
+  color: 'primary',
+  description: ''
+};
+
+export default React.memo(ScoreCard);

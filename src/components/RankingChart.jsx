@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatScore } from '../utils/formatters';
 
-const RankingChart = ({ departments }) => {
-  const topDepartments = departments.slice(0, 10);
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
+        <p className="font-semibold text-gray-800">{label}</p>
+        <p className="text-primary">
+          청렴지수: <span className="font-bold">{formatScore(payload[0].value)}점</span>
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-          <p className="font-semibold text-gray-800">{label}</p>
-          <p className="text-primary">
-            청렴지수: <span className="font-bold">{formatScore(payload[0].value)}점</span>
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
+const RankingChart = ({ departments }) => {
+  const topDepartments = useMemo(() => departments.slice(0, 10), [departments]);
 
   return (
     <div className="card">
@@ -59,4 +60,14 @@ const RankingChart = ({ departments }) => {
   );
 };
 
-export default RankingChart;
+RankingChart.propTypes = {
+  departments: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    rank: PropTypes.number,
+    trend: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  })).isRequired
+};
+
+export default React.memo(RankingChart);
